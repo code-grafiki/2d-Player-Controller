@@ -9,6 +9,7 @@ public class PlayerMovementScripts : MonoBehaviour
     Vector2 moveInput;
     Rigidbody2D MyRigidbody;
     [SerializeField] float PlayerSpeed = 1f;
+    [SerializeField] float JumpSpeed =1f;
 
     Animator MyAnimator;
 
@@ -38,6 +39,14 @@ public class PlayerMovementScripts : MonoBehaviour
         
         bool HasHorizontalSpeed = Mathf.Abs(MyRigidbody.velocity.x) > Mathf.Epsilon;
         MyAnimator.SetBool("isRunning", HasHorizontalSpeed);
+    }
+
+    void OnJump(InputValue value)
+    {
+        if(value.isPressed)
+        {
+            MyRigidbody.velocity += new Vector2 (0f, JumpSpeed);
+        }
     }
 
     void FlipSprite()
