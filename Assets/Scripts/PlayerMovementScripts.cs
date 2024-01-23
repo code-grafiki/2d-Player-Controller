@@ -18,7 +18,6 @@ public class PlayerMovementScripts : MonoBehaviour
         MyAnimator = GetComponent<Animator>();
     }
 
-
     void Update()
     {
         Run();
@@ -36,7 +35,9 @@ public class PlayerMovementScripts : MonoBehaviour
         Vector2 PlayerVelocity = new Vector2(moveInput.x*PlayerSpeed, MyRigidbody.velocity.y);
         MyRigidbody.velocity = PlayerVelocity;
         
-        MyAnimator.SetBool("IsRunning", true);
+        
+        bool HasHorizontalSpeed = Mathf.Abs(MyRigidbody.velocity.x) > Mathf.Epsilon;
+        MyAnimator.SetBool("isRunning", HasHorizontalSpeed);
     }
 
     void FlipSprite()
@@ -47,6 +48,5 @@ public class PlayerMovementScripts : MonoBehaviour
         {
             transform.localScale = new Vector2 (Mathf.Sign(MyRigidbody.velocity.x),1f);
         }
-        
     }
 }
