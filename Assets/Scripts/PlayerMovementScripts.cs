@@ -10,7 +10,6 @@ public class PlayerMovementScripts : MonoBehaviour
     Rigidbody2D MyRigidbody;
     [SerializeField] float PlayerSpeed = 1f;
     [SerializeField] float JumpSpeed =1f;
-
     Animator MyAnimator;
 
     void Start()
