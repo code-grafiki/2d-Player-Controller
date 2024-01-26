@@ -13,12 +13,14 @@ public class PlayerMovementScripts : MonoBehaviour
     [SerializeField] float ClimbSpeed =1f;
     Animator MyAnimator;
     CapsuleCollider2D myCapsuleCollider;
+    float MyGravityScaleAtStart;
 
     void Start()
     {
         MyRigidbody = GetComponent<Rigidbody2D>();
         MyAnimator = GetComponent<Animator>();
         myCapsuleCollider = GetComponent<CapsuleCollider2D>();
+        MyGravityScaleAtStart = MyRigidbody.gravityScale;
     }
 
     void Update()
@@ -71,9 +73,11 @@ public class PlayerMovementScripts : MonoBehaviour
     {
         if(!myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Climbing")))
         {
+            MyRigidbody.gravityScale = MyGravityScaleAtStart;
             return;
         }
         Vector2 ClimbVelocity = new Vector2(MyRigidbody.velocity.x,moveInput.y * ClimbSpeed);
         MyRigidbody.velocity = ClimbVelocity;
+        MyRigidbody.gravityScale =0f;
     }
 }
