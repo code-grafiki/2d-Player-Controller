@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,6 +16,7 @@ public class PlayerMovementScripts : MonoBehaviour
     CapsuleCollider2D myBodyCollider;
     BoxCollider2D myFeetCollider;
     float MyGravityScaleAtStart;
+    bool isAlive = true;
 
     void Start()
     {
@@ -27,20 +29,23 @@ public class PlayerMovementScripts : MonoBehaviour
 
     void Update()
     {
+        if(!isAlive){ return; }
         Run();
         FlipSprite();
         ClimbLadder();
-
+        Die();
     }
 
     void OnMove(InputValue value)
     {
+        if(!isAlive){ return; }
         moveInput = value.Get<Vector2>();
         Debug.Log(moveInput);
     }
 
     void Run()
     {
+        
         Vector2 PlayerVelocity = new Vector2(moveInput.x*PlayerSpeed, MyRigidbody.velocity.y);
         MyRigidbody.velocity = PlayerVelocity;
         
@@ -51,6 +56,7 @@ public class PlayerMovementScripts : MonoBehaviour
 
     void OnJump(InputValue value)
     {
+        if(!isAlive){ return; }
         if(!myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
         {
             return;
@@ -85,5 +91,13 @@ public class PlayerMovementScripts : MonoBehaviour
 
         bool HasVerticalSpeed = Mathf.Abs(MyRigidbody.velocity.y) > Mathf.Epsilon;
         MyAnimator.SetBool("isClimbing", HasVerticalSpeed);
+    }
+
+    void Die()
+    {
+        if(myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")))
+        {
+            isAlive = false;
+        }
     }
 }
