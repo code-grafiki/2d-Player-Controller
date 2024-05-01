@@ -17,6 +17,9 @@ public class PlayerMovementScripts : MonoBehaviour
     BoxCollider2D myFeetCollider;
     float MyGravityScaleAtStart;
     bool isAlive = true;
+    [SerializeField] Vector2 deathKick = new Vector2(10f,10f);
+    [SerializeField] GameObject arrow;
+    [SerializeField] Transform bow;
 
     void Start()
     {
@@ -67,6 +70,16 @@ public class PlayerMovementScripts : MonoBehaviour
         }
     }
 
+    void OnFire(InputValue value)
+    {
+        if(!isAlive){ return; }
+        Instantiate(arrow, bow.position, transform.rotation);
+
+        if(Input.GetMouseButton(0))
+        {
+            MyAnimator.SetBool("isShooting",true);
+        }
+    }
 
     void FlipSprite()
     {
@@ -95,9 +108,11 @@ public class PlayerMovementScripts : MonoBehaviour
 
     void Die()
     {
-        if(myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")))
+        if(myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy", "Spikes")))
         {
             isAlive = false;
+            MyAnimator.SetTrigger("Dead");
+            MyRigidbody.velocity = deathKick;
         }
     }
 }

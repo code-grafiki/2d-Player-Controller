@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - Background
   - Bouncing
   - Enemy
-  - 
-  - 
+  - Spikes
+  - arrows
   - 
   - 
   - 
@@ -52,6 +53,9 @@ TagManager:
     locked: 0
   - name: ladder sort
     uniqueID: 687822705
+    locked: 0
+  - name: spikes
+    uniqueID: 363987655
     locked: 0
   - name: enemy
     uniqueID: 2797444847
