@@ -8,6 +8,7 @@ public class CoinPickup : MonoBehaviour
     [SerializeField] int coinScore = 10;
 
     bool wasCollected = false;
+
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "Player" && !wasCollected)
         {
@@ -16,7 +17,6 @@ public class CoinPickup : MonoBehaviour
             AudioSource.PlayClipAtPoint(coinPickUp, Camera.main.transform.position);
             gameObject.SetActive(false);
             Destroy(gameObject);
-            
             Debug.Log("coin picked up");
         }
         
